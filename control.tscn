@@ -1,0 +1,60 @@
+[gd_scene load_steps=3 format=3 uid="uid://2ldlmdimw64p"]
+
+[ext_resource type="Script" path="res://control.gd" id="1_omsry"]
+[ext_resource type="PackedScene" uid="uid://c3psn3meyx04p" path="res://player.tscn" id="2_y7rsr"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_omsry")
+player_scene = ExtResource("2_y7rsr")
+
+[node name="Play" type="Button" parent="."]
+layout_mode = 0
+offset_left = 889.0
+offset_top = 130.0
+offset_right = 1091.0
+offset_bottom = 183.0
+text = "PLAY"
+
+[node name="Host" type="Button" parent="."]
+layout_mode = 0
+offset_left = 166.0
+offset_top = 133.0
+offset_right = 355.0
+offset_bottom = 183.0
+disabled = true
+text = "HOST"
+
+[node name="Join" type="Button" parent="."]
+layout_mode = 0
+offset_left = 468.0
+offset_top = 131.0
+offset_right = 722.0
+offset_bottom = 180.0
+text = "JOIN"
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 412.0
+offset_top = 220.0
+offset_right = 939.0
+offset_bottom = 275.0
+placeholder_text = "Enter the Room's name"
+
+[node name="Enter" type="Button" parent="."]
+layout_mode = 0
+offset_left = 313.0
+offset_top = 222.0
+offset_right = 399.0
+offset_bottom = 275.0
+text = "ENTER"
+
+[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="Enter" to="." method="_on_enter_pressed"]
