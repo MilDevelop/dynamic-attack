@@ -41,6 +41,7 @@ func _add_player(id = 1):
 	if multiplayer.is_server():
 		conection_players += 1
 		Signals.emit_signal("transfer", pr, conection_players)
+		
 
 func _on_host_pressed() -> void:
 	peer.create_server(PORT, 2)
@@ -48,11 +49,19 @@ func _on_host_pressed() -> void:
 		print("Server started on port " + str(PORT))
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_connected.connect(_add_player)
+	multiplayer.peer_disconnected.connect(_remove_player)
 	_add_player()
 	Paralax.visible = true
 	Game.visible = true
 	ctr.visible = false
-
+	
+func _remove_player(peer_id):
+	var format_string = "../{str}"
+	var actual_string = format_string.format({"str": str(peer_id)})
+	var player = get_node_or_null(actual_string)
+	if player:
+		
+		player.queue_free()
 
 func _on_enter_pressed() -> void:
 	if UserInput.text != "":

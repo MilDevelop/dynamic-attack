@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var heatlhs_bar = $"Game/HealthsBar"
+@onready var HP_Value = $"Game/HealthsBar/HP-Value"
 @onready var control = $Control
 @onready var player = $Player
 
@@ -17,7 +18,7 @@ func _process(delta: float) -> void:
 
 func _on_player_health_changed(new_health: int) -> void:
 	heatlhs_bar.value = int((new_health * 78) / 100)
-
+	HP_Value.text = str(new_health)
 func _spawn(gamer, connection_players):
 	call_deferred("add_child", gamer)
 	Num_Plr = connection_players

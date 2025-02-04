@@ -80,6 +80,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
+		if !Host_Player:
+			print(velocity)
 		var direction := Input.get_axis("ui_left", "ui_right")
 		### BASEMENT STATE MACHINE
 		match state: 
@@ -112,7 +114,9 @@ func _physics_process(delta: float) -> void:
 				if velocity.x < 0:
 					velocity.x += 5
 			else:
-				Hitten = false
+				if Hitten:
+					velocity = Vector2.ZERO
+					Hitten = false
 				impuls = false
 		if not is_on_floor():
 			velocity += get_gravity() * delta
@@ -241,8 +245,10 @@ func attack_freeze():
 	
 func get_damage_state():
 	Hitten = true
+	Hit_Slide.disabled = true
+	AnimPlayer.play("Hit")
 	state = MOVE
-		
+
 @rpc("call_local", "reliable", "any_peer")
 func get_damage(get_damage_current, got_velocity):
 	state = GET_DAMAGE
@@ -250,6 +256,10 @@ func get_damage(get_damage_current, got_velocity):
 		get_damage_current /= 2
 	else:
 		health -= get_damage_current
+		if got_velocity[0] > 0:
+			anim.flip_h = true
+		else:
+			anim.flip_h = false
 		velocity = got_velocity
 	emit_signal("health_changed", health)
 	if health <= 0:

@@ -927,7 +927,7 @@ script = ExtResource("1_g32ts")
 position = Vector2(3, -10)
 scale = Vector2(3.18, 3.25676)
 sprite_frames = SubResource("SpriteFrames_8be60")
-animation = &"fallen for attack"
+animation = &"Fall Attack"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -941,10 +941,12 @@ shape = SubResource("CapsuleShape2D_8hq5r")
 [node name="AttackDirectionUP" type="Node2D" parent="."]
 
 [node name="HitBoxUP" type="Area2D" parent="AttackDirectionUP" groups=["Damager"]]
+visible = false
 collision_layer = 32
 collision_mask = 16
 
 [node name="HIt-up" type="CollisionShape2D" parent="AttackDirectionUP/HitBoxUP"]
+visible = false
 position = Vector2(39, -19)
 shape = SubResource("RectangleShape2D_3njx7")
 disabled = true
@@ -963,7 +965,6 @@ shape = SubResource("RectangleShape2D_1f4eu")
 disabled = true
 
 [node name="AttackDirectionSLIDE" type="Node2D" parent="."]
-visible = false
 
 [node name="hitBoxSLIDE" type="Area2D" parent="AttackDirectionSLIDE"]
 collision_layer = 32
@@ -977,6 +978,7 @@ shape = SubResource("RectangleShape2D_kckej")
 visible = false
 
 [node name="HitBoxFALL" type="Area2D" parent="AttackDirectionFALL"]
+visible = false
 collision_layer = 32
 collision_mask = 16
 
