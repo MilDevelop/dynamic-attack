@@ -7,9 +7,9 @@ var RoomName : String = ""
 var conection_players : int = 0
 
 @export var player_scene : PackedScene
-@onready var host_button = $Host
-@onready var UserInput = $LineEdit
-@onready var ctr = $"."
+@onready var host_button = $CanvasLayer/MainMenu/MarginContainer/VBoxContainer/Host
+@onready var UserInput = $CanvasLayer/MainMenu/MarginContainer/VBoxContainer/LineEdit
+@onready var ctr = $CanvasLayer
 @onready var Game = $"../Game"
 @onready var Paralax = $"../Game/ParallaxBackground"
 	
@@ -24,7 +24,7 @@ func _on_play_pressed() -> void:
 	pass
 
 func _on_join_pressed() -> void:
-	peer.create_client("127.0.0.1", PORT)
+	peer.create_client("localhost", PORT)
 	multiplayer.multiplayer_peer = peer
 	for iter in ctr.get_children():
 		iter.hide()
@@ -67,4 +67,3 @@ func _on_enter_pressed() -> void:
 	if UserInput.text != "":
 		host_button.disabled = false
 		RoomName = UserInput.text
-		

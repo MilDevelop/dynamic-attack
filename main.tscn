@@ -145,6 +145,10 @@ sources/0 = SubResource("TileSetAtlasSource_4ju0b")
 script = ExtResource("1_yfmwd")
 
 [node name="Control" parent="." instance=ExtResource("2_maq5l")]
+offset_left = 587.0
+offset_top = 286.0
+offset_right = 587.0
+offset_bottom = 286.0
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://player.tscn", "res://test_mobe.tscn")
