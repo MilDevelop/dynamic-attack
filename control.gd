@@ -24,7 +24,7 @@ func _on_play_pressed() -> void:
 	pass
 
 func _on_join_pressed() -> void:
-	peer.create_client("localhost", PORT)
+	peer.create_client(RoomName, PORT)
 	multiplayer.multiplayer_peer = peer
 	for iter in ctr.get_children():
 		iter.hide()
@@ -51,6 +51,7 @@ func _on_host_pressed() -> void:
 	multiplayer.peer_connected.connect(_add_player)
 	multiplayer.peer_disconnected.connect(_remove_player)
 	_add_player()
+	UPnP_setup()
 	Paralax.visible = true
 	Game.visible = true
 	ctr.visible = false
@@ -67,3 +68,18 @@ func _on_enter_pressed() -> void:
 	if UserInput.text != "":
 		host_button.disabled = false
 		RoomName = UserInput.text
+
+func UPnP_setup():
+	var UPnP = UPNP.new()
+	var discover_result = UPnP.discover()
+	assert(discover_result == UPNP.UPNP_RESULT_SUCCESS, \
+	"UPNP Discover failed %s" % discover_result)
+	assert(UPnP.get_gateway() and UPnP.get_gateway().is_valid_gateway(), \
+	"UPnP invalid gateway")
+	var map_result = UPnP.add_port_mapping(PORT)
+	assert(map_result == UPNP.UPNP_RESULT_SUCCESS, \
+	"UPNP Discover failed %s" % map_result)
+	print("Successful connection, Join Address: %s" % UPnP.query_external_address())
+	
+	
+	
