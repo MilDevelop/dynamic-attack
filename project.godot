@@ -11,13 +11,13 @@ config_version=5
 [application]
 
 config/name="Dynamic Attack"
-run/main_scene="res://main.tscn"
+run/main_scene="res://World/main.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
-config/icon="res://icon.svg"
+config/icon="res://Textures/icon.svg"
 
 [autoload]
 
-Signals="*res://signals.gd"
+Signals="*res://Global/signals.gd"
 
 [editor_plugins]
 
@@ -84,4 +84,5 @@ Attack-Up={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-renderer/rendering_method="mobile"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
