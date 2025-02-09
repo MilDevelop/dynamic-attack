@@ -19,6 +19,8 @@ enum {
 	Base_Fall_damage = 5
 }
 
+var Spawn_Host = [Vector2(275, 375), Vector2(105, 150), Vector2(350, 75)]
+var Spawn_Guest = [Vector2(875, 375), Vector2(1025, 150), Vector2(800, 75)]
 
 ### variables
 ## MOVE
@@ -64,10 +66,10 @@ func _ready() -> void:
 	Host_Player = get_root(Player_Name)
 	if Host_Player:
 		NickName.text = "HOST"
-		position = Vector2(275, 375)
+		position = Spawn_Host[0]
 	else:
 		NickName.text = "GUEST"
-		position = Vector2(875, 375)
+		position = Spawn_Guest[0]
 		anim.flip_h = true
 	health = max_hp
 	Hit_UP.disabled = true
@@ -82,6 +84,8 @@ func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
 		if !Host_Player:
 			print(velocity)
+		if position.y > 650:
+			death_and_reboot()
 		var direction := Input.get_axis("ui_left", "ui_right")
 		### BASEMENT STATE MACHINE
 		match state: 
@@ -108,7 +112,7 @@ func _physics_process(delta: float) -> void:
 				attack_type = false
 				if !Attack_cooldown:
 					state = ATTACK_ON_FLOOR
-			if velocity.x != 0 and is_on_floor() and Hitten:
+			if velocity.x != 0 and is_on_floor() and Hitten and !direction:
 				if velocity.x > 0:
 					velocity.x -= 5
 				if velocity.x < 0:
@@ -263,8 +267,18 @@ func get_damage(get_damage_current, got_velocity):
 		velocity = got_velocity
 	emit_signal("health_changed", health)
 	if health <= 0:
-		health = 0
-		queue_free()
+		death_and_reboot()
+		
+func death_and_reboot():
+	health = 0
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	if Host_Player:
+		position = Spawn_Host[rng.randi_range(0, 2)]
+	else:
+		position = Spawn_Guest[rng.randi_range(0, 2)]
+	health = max_hp
+	emit_signal("health_changed", health)
 
 func define_hign_damage(high):
 	return round((abs(high[1] - high[0])) / 100) * Base_Fall_damage

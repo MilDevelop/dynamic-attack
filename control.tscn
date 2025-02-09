@@ -44,7 +44,6 @@ horizontal_alignment = 1
 
 [node name="Host" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
-disabled = true
 text = "HOST"
 
 [node name="Join" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]

@@ -145,6 +145,7 @@ sources/0 = SubResource("TileSetAtlasSource_4ju0b")
 script = ExtResource("1_yfmwd")
 
 [node name="Control" parent="." instance=ExtResource("2_maq5l")]
+visible = false
 offset_left = 587.0
 offset_top = 286.0
 offset_right = 587.0
@@ -229,6 +230,7 @@ texture_progress = ExtResource("12_p0yfq")
 texture_progress_offset = Vector2(43, 0)
 
 [node name="HP-Value" type="Label" parent="Game/HealthsBar"]
+visible = false
 layout_mode = 0
 offset_left = 13.0
 offset_top = 3.0
