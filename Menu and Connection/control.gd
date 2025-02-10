@@ -52,6 +52,7 @@ func _on_host_pressed() -> void:
 	multiplayer.peer_disconnected.connect(_remove_player)
 	_add_player()
 	UPnP_setup()
+	$ParallaxBackground.visible = false
 	Paralax.visible = true
 	Game.visible = true
 	ctr.visible = false
@@ -72,7 +73,7 @@ func _on_enter_pressed() -> void:
 func UPnP_setup():
 	var UPnP = UPNP.new()
 	var discover_result = UPnP.discover()
-	if (UPnP.get_gateway() and UPnP.get_gateway().is_valid_gateway() or discover_result == UPNP.UPNP_RESULT_SUCCESS) == false:
+	if (UPnP.get_gateway() and UPnP.get_gateway().is_valid_gateway() or discover_result != UPNP.UPNP_RESULT_SUCCESS) == false:
 		var ip
 		for address in IP.get_local_addresses():
 			if (address.split('.')[0] == "192"):

@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://2ldlmdimw64p"]
+[gd_scene load_steps=9 format=3 uid="uid://2ldlmdimw64p"]
 
 [ext_resource type="Script" path="res://Menu and Connection/control.gd" id="1_omsry"]
 [ext_resource type="PackedScene" uid="uid://c3psn3meyx04p" path="res://Player/player.tscn" id="2_y7rsr"]
+[ext_resource type="Script" path="res://Menu and Connection/parallax_background.gd" id="3_5rlen"]
+[ext_resource type="Texture2D" uid="uid://ytylutwrwxv1" path="res://Textures/Glacial-mountains-parallax-background_vnitti/Layers/sky.png" id="3_uhqkt"]
+[ext_resource type="Texture2D" uid="uid://c2fsrcp8qxcq2" path="res://Textures/Glacial-mountains-parallax-background_vnitti/Layers/clouds_bg.png" id="4_j7tbj"]
+[ext_resource type="Texture2D" uid="uid://cwfsg8ifq7l4d" path="res://Textures/Glacial-mountains-parallax-background_vnitti/Layers/glacial_mountains_lightened.png" id="5_4rqp7"]
+[ext_resource type="Texture2D" uid="uid://cfhrgcnmcrrec" path="res://Textures/Glacial-mountains-parallax-background_vnitti/Layers/glacial_mountains.png" id="6_wm4ty"]
+[ext_resource type="Texture2D" uid="uid://rbwjtjsf3xwb" path="res://Textures/Glacial-mountains-parallax-background_vnitti/Layers/clouds_mg_2.png" id="8_yf3tp"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -58,6 +64,54 @@ alignment = 1
 [node name="Enter" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "ENTER"
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+script = ExtResource("3_5rlen")
+
+[node name="ParallaxLayer1" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(1151, 0)
+
+[node name="Sky" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer1"]
+position = Vector2(576, 328)
+scale = Vector2(2.9987, 3.05092)
+texture = ExtResource("3_uhqkt")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.25, 0)
+motion_mirroring = Vector2(1152, 0)
+
+[node name="CloudsBg" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(576, 332)
+scale = Vector2(3.00065, 3.06597)
+texture = ExtResource("4_j7tbj")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.8, 1)
+motion_mirroring = Vector2(1154, 0)
+
+[node name="GlacialMountainsLightened" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2(577.75, 331)
+scale = Vector2(3.0013, 3.01852)
+texture = ExtResource("5_4rqp7")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.6, 1)
+motion_mirroring = Vector2(1153, 0)
+
+[node name="GlacialMountains" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+position = Vector2(575.251, 330)
+scale = Vector2(3.00911, 3.0463)
+texture = ExtResource("6_wm4ty")
+
+[node name="ParallaxLayer5" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2(0, 3.05176e-05)
+scale = Vector2(1, 1)
+motion_mirroring = Vector2(1151, 0)
+
+[node name="CloudsMg2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer5"]
+position = Vector2(576.5, 331)
+scale = Vector2(2.99739, 3.02778)
+texture = ExtResource("8_yf3tp")
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/Join" to="." method="_on_join_pressed"]
