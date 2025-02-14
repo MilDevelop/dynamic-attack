@@ -30,6 +30,7 @@ func _on_join_pressed() -> void:
 		iter.hide()
 	if peer:
 		print("Your join on server " + str(PORT))
+	$ParallaxBackground.visible = false
 	Paralax.visible = true
 	Game.visible = true
 	ctr.visible = false
@@ -62,7 +63,6 @@ func _remove_player(peer_id):
 	var actual_string = format_string.format({"str": str(peer_id)})
 	var player = get_node_or_null(actual_string)
 	if player:
-		
 		player.queue_free()
 
 func _on_enter_pressed() -> void:
@@ -88,6 +88,4 @@ func UPnP_setup():
 	assert(map_result == UPNP.UPNP_RESULT_SUCCESS, \
 	"UPNP Discover failed %s" % map_result)
 	print("Successful connection, Join Address: %s" % UPnP.query_external_address())
-	
-	
 	

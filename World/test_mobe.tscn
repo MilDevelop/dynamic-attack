@@ -45,8 +45,8 @@ position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_mup2m")
 
 [node name="EnemyHurtBox" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 0
+collision_layer = 16
+collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHurtBox"]
 visible = false

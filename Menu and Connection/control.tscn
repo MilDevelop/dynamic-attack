@@ -87,11 +87,11 @@ texture = ExtResource("4_j7tbj")
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.8, 1)
-motion_mirroring = Vector2(1154, 0)
+motion_mirroring = Vector2(1936, 0)
 
 [node name="GlacialMountainsLightened" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
-position = Vector2(577.75, 331)
-scale = Vector2(3.0013, 3.01852)
+position = Vector2(783, 331)
+scale = Vector2(3.00521, 3.01852)
 texture = ExtResource("5_4rqp7")
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -105,7 +105,6 @@ texture = ExtResource("6_wm4ty")
 
 [node name="ParallaxLayer5" type="ParallaxLayer" parent="ParallaxBackground"]
 position = Vector2(0, 3.05176e-05)
-scale = Vector2(1, 1)
 motion_mirroring = Vector2(1151, 0)
 
 [node name="CloudsMg2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer5"]
