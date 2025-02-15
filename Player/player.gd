@@ -245,7 +245,6 @@ func attack_freeze():
 	await get_tree().create_timer(0.5)
 	Attack_cooldown = false
 
-@rpc("call_local")	
 func get_damage_state():
 	Hitten = true
 	Hit_Slide.disabled = true
@@ -263,7 +262,7 @@ func get_damage(get_damage_current, got_velocity):
 			anim.flip_h = true
 		else:
 			anim.flip_h = false
-		velocity = got_velocity
+		set_velocity(got_velocity)
 	emit_signal("health_changed", health)
 	if health <= 0:
 		death_and_reboot()

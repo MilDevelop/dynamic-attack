@@ -912,6 +912,12 @@ properties/8/replication_mode = 1
 properties/9/path = NodePath("AttackDirectionFALL/HitBoxFALL/Hit-Fall:position")
 properties/9/spawn = true
 properties/9/replication_mode = 1
+properties/10/path = NodePath(".:scale")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath(".:velocity")
+properties/11/spawn = true
+properties/11/replication_mode = 2
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
