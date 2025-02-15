@@ -45,7 +45,7 @@ func _add_player(id = 1):
 		
 
 func _on_host_pressed() -> void:
-	peer.create_server(PORT, 2)
+	peer.create_server(PORT)
 	if peer:
 		print("Server started on port " + str(PORT))
 	multiplayer.multiplayer_peer = peer

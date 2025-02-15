@@ -171,9 +171,9 @@ func move_state(direction):
 				slide_cooldawn = 0
 				damage_current = Slide_damage
 				if Hit_Slide.position.x > 0:
-					given_velocity = Vector2(300, -200)
+					given_velocity = Vector2(100, -400)
 				else:
-					given_velocity = Vector2(-300, -200)
+					given_velocity = Vector2(-100, -400)
 				AnimPlayer.play("Slide")
 				await AnimPlayer.animation_finished
 				slide = false
@@ -244,7 +244,8 @@ func attack_freeze():
 	Attack_cooldown = true
 	await get_tree().create_timer(0.5)
 	Attack_cooldown = false
-	
+
+@rpc("call_local")	
 func get_damage_state():
 	Hitten = true
 	Hit_Slide.disabled = true
@@ -306,3 +307,4 @@ func _on_hit_box_slide_area_entered(area: Area2D) -> void:
 
 func _on_hit_box_fall_area_entered(area: Area2D) -> void:
 	damaging(area)
+	
