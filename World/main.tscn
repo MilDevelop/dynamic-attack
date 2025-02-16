@@ -240,5 +240,14 @@ theme_override_font_sizes/font_size = 23
 text = "100"
 horizontal_alignment = 1
 
+[node name="LeaveButton" type="Button" parent="Game"]
+offset_left = 1062.0
+offset_top = 10.0
+offset_right = 1142.0
+offset_bottom = 49.0
+text = "Leave "
+
 [node name="TestMobe" parent="Game" instance=ExtResource("13_jr3hh")]
 position = Vector2(664, 372)
+
+[connection signal="pressed" from="Game/LeaveButton" to="." method="_on_leave_button_pressed"]
