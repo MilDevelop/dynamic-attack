@@ -610,7 +610,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_t7coa"]
-length = 0.3
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -806,7 +806,7 @@ tracks/2/keys = {
 "values": [false, true]
 }
 
-[sub_resource type="Animation" id="Animation_5wgra"]
+[sub_resource type="Animation" id="Animation_12aql"]
 length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -839,7 +839,7 @@ tracks/2/path = NodePath("AttackDirectionFALL/HitBoxFALL/Hit-Fall:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.333333),
+"times": PackedFloat32Array(0, 0.350606),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -858,7 +858,7 @@ _data = {
 "RESET": SubResource("Animation_y1iu2"),
 "Run": SubResource("Animation_1mrg1"),
 "Slide": SubResource("Animation_bacvu"),
-"fallen for attack": SubResource("Animation_5wgra")
+"fallen for attack": SubResource("Animation_12aql")
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8hq5r"]
@@ -888,37 +888,37 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath("AnimationPlayer:current_animation")
+properties/2/path = NodePath("AnimatedSprite2D:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
-properties/3/path = NodePath("AnimatedSprite2D:rotation")
+properties/3/path = NodePath("AnimatedSprite2D:flip_h")
 properties/3/spawn = true
 properties/3/replication_mode = 1
-properties/4/path = NodePath("AnimatedSprite2D:flip_h")
+properties/4/path = NodePath("AttackDirectionUP/HitBoxUP/HIt-up:position")
 properties/4/spawn = true
 properties/4/replication_mode = 1
-properties/5/path = NodePath("AttackDirectionUP/HitBoxUP/HIt-up:position")
+properties/5/path = NodePath("Damage/MyselfHitBox/CollisionShape2D:position")
 properties/5/spawn = true
 properties/5/replication_mode = 1
-properties/6/path = NodePath("Damage/MyselfHitBox/CollisionShape2D:position")
+properties/6/path = NodePath("AttackDirectionDOWN/hitBoxDOWN/Hit-Down:position")
 properties/6/spawn = true
 properties/6/replication_mode = 1
-properties/7/path = NodePath("AttackDirectionDOWN/hitBoxDOWN/Hit-Down:position")
+properties/7/path = NodePath("AttackDirectionSLIDE/hitBoxSLIDE/Hit-Slide:position")
 properties/7/spawn = true
 properties/7/replication_mode = 1
-properties/8/path = NodePath("AttackDirectionSLIDE/hitBoxSLIDE/Hit-Slide:position")
+properties/8/path = NodePath("AttackDirectionFALL/HitBoxFALL/Hit-Fall:position")
 properties/8/spawn = true
 properties/8/replication_mode = 1
-properties/9/path = NodePath("AttackDirectionFALL/HitBoxFALL/Hit-Fall:position")
+properties/9/path = NodePath(".:velocity")
 properties/9/spawn = true
-properties/9/replication_mode = 1
-properties/10/path = NodePath(".:scale")
+properties/9/replication_mode = 2
+properties/10/path = NodePath("AnimatedSprite2D:animation")
 properties/10/spawn = true
 properties/10/replication_mode = 1
-properties/11/path = NodePath(".:velocity")
+properties/11/path = NodePath("AnimationPlayer:current_animation")
 properties/11/spawn = true
 properties/11/replication_mode = 2
-properties/12/path = NodePath("AnimatedSprite2D:animation")
+properties/12/path = NodePath(".:scale")
 properties/12/spawn = true
 properties/12/replication_mode = 1
 
@@ -930,7 +930,7 @@ script = ExtResource("1_23ykw")
 position = Vector2(3, -10)
 scale = Vector2(3.18, 3.25676)
 sprite_frames = SubResource("SpriteFrames_8be60")
-animation = &"Attack Around"
+animation = &"fallen for attack"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -978,10 +978,8 @@ position = Vector2(23, 35)
 shape = SubResource("RectangleShape2D_kckej")
 
 [node name="AttackDirectionFALL" type="Node2D" parent="."]
-visible = false
 
 [node name="HitBoxFALL" type="Area2D" parent="AttackDirectionFALL"]
-visible = false
 collision_layer = 32
 collision_mask = 16
 
@@ -1009,7 +1007,6 @@ offset_right = 38.0
 offset_bottom = -39.0
 horizontal_alignment = 1
 
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="area_entered" from="AttackDirectionUP/HitBoxUP" to="." method="_on_hit_box_up_area_entered"]
 [connection signal="area_entered" from="AttackDirectionDOWN/hitBoxDOWN" to="." method="_on_hit_box_down_area_entered"]
 [connection signal="area_entered" from="AttackDirectionSLIDE/hitBoxSLIDE" to="." method="_on_hit_box_slide_area_entered"]

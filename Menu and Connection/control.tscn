@@ -112,6 +112,8 @@ position = Vector2(576.5, 331)
 scale = Vector2(2.99739, 3.02778)
 texture = ExtResource("8_yf3tp")
 
+[connection signal="mouse_entered" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/Host" to="." method="_on_host_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/Host" to="." method="_on_host_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/Join" to="." method="_on_join_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/Enter" to="." method="_on_enter_pressed"]

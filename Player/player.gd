@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 signal health_changed(new_health)
 
+
 enum {
 	IDLE,
 	MOVE,
@@ -55,6 +56,7 @@ var Host_Player = false
 var Player_Name = ""
 var damage_current = 0
 var given_velocity = Vector2(0, 0)
+var enemy_position_x : int
 
 var Hitten = false
 
@@ -78,7 +80,6 @@ func _ready() -> void:
 	Hit_Fall.disabled = true
 	if multiplayer.get_unique_id() == get_multiplayer_authority():
 		health_changed.connect(get_parent()._on_player_health_changed)
-		
 
 func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
@@ -160,6 +161,8 @@ func idle():
 
 func move_state(direction):
 	if direction and !Attack_key:
+		if multiplayer.get_unique_id() == get_multiplayer_authority():
+			disable_attack()
 		if slide == true:
 			SLIDE_SPEED -= 0.02
 		velocity.x = direction * SPEED * SLIDE_SPEED
@@ -215,14 +218,19 @@ func Attack_on_floor_State():
 	else:
 		damage_current = Down_damage
 		if Hit_Down.position.x > 0:
-			given_velocity = Vector2(150, 0)
+			given_velocity = Vector2(190, 0)
 		else:
-			given_velocity = Vector2(-150, 0)
+			given_velocity = Vector2(-190, 0)
 		AnimPlayer.play("Attack down")
 	await AnimPlayer.animation_finished
 	Attack_key = false
 	attack_freeze()
 	state = IDLE
+	
+func disable_attack():
+	Hit_UP.disabled = true
+	Hit_Down.disabled = true
+	Hit_Fall.disabled = true
 	
 func fall_attack_state():
 	if velocity.y == 0 and Input.is_action_pressed("ui_down"):
@@ -230,15 +238,13 @@ func fall_attack_state():
 		Attack_key = true
 		velocity.x = 0
 		damage_current = define_hign_damage(High)
-		if Hit_Fall.position.x > 0:
-			given_velocity = Vector2(175, -400)
-		else:
-			given_velocity = Vector2(-175, -400)
+		given_velocity = Vector2(175, -400)
 		AnimPlayer.play("fallen for attack")
 		await AnimPlayer.animation_finished
 		state = IDLE
 	else:
 		state = IDLE
+
 
 func attack_freeze():
 	Attack_cooldown = true
@@ -248,7 +254,8 @@ func attack_freeze():
 func get_damage_state():
 	Hitten = true
 	Hit_Slide.disabled = true
-	AnimPlayer.play("Hit")
+	if AnimPlayer.current_animation != "Hit":
+		AnimPlayer.play("Hit")
 	state = MOVE
 
 @rpc("call_local", "reliable", "any_peer")
@@ -275,6 +282,7 @@ func death_and_reboot():
 		position = Spawn_Host[rng.randi_range(0, 2)]
 	else:
 		position = Spawn_Guest[rng.randi_range(0, 2)]
+	velocity = Vector2.ZERO
 	health = max_hp
 	emit_signal("health_changed", health)
 
@@ -292,8 +300,11 @@ func get_root(Player_name):
 func damaging(area: Area2D): 
 	var player = area.get_parent().get_parent()
 	if player.name != name and is_multiplayer_authority():
+		if area.get_parent().get_parent().position.x < position.x and state == FALL_ATTACK:
+			given_velocity[0] = -given_velocity[0]
 		area.get_parent().get_parent().get_damage.rpc(damage_current, given_velocity)
 	return
+
 
 func _on_hit_box_up_area_entered(area: Area2D) -> void:
 	damaging(area)
@@ -306,4 +317,3 @@ func _on_hit_box_slide_area_entered(area: Area2D) -> void:
 
 func _on_hit_box_fall_area_entered(area: Area2D) -> void:
 	damaging(area)
-	
