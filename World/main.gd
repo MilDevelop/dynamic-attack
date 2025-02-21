@@ -1,13 +1,14 @@
 extends Node2D
 
-@onready var heatlhs_bar = $"Game/HealthsBar"
-@onready var HP_Value = $"Game/HealthsBar/HP-Value"
+@onready var heatlhs_bar = $Game/GUI/HealthsBar
+@onready var HP_Value = $"Game/GUI/HealthsBar/HP-Value"
 @onready var control = $Control
 @onready var player = $Player
-@onready var LeaveButton = $Game/LeaveButton
 @onready var Background = $Game/ParallaxBackground
+@onready var temp_mn = $Game/GUI/TemporaryMenu
 
 var Num_Plr : int = 0
+var Temporary_Menu : bool = false
 
 func _ready() -> void:
 	Signals.transfer.connect(_spawn)
@@ -16,7 +17,13 @@ func _ready() -> void:
 	heatlhs_bar.value = 78
 
 func _process(delta: float) -> void:
-	pass
+	if Input.is_action_just_pressed("ui_cancel"):
+		Temporary_Menu = !Temporary_Menu
+	
+	if Temporary_Menu:
+		temp_mn.show()
+	else:
+		temp_mn.hide()
 
 func _on_player_health_changed(new_health: int) -> void:
 	heatlhs_bar.value = int((new_health * 78) / 100)
@@ -26,11 +33,6 @@ func _spawn(gamer, connection_players):
 	call_deferred("add_child", gamer)
 	Num_Plr = connection_players
 
-func _on_leave_button_pressed() -> void:
-	print("in the following versions")
-	#var peer_id = get_multiplayer_authority()
-	#multiplayer.connect("peer_disconnected" ,Callable(self, "control._remove_player"), peer_id) 
-	#hide()
-	#Background.hide()
-	#for iter in control.get_children():
-		#iter.visible = true
+
+func _on_resume_pressed() -> void:
+	Temporary_Menu = !Temporary_Menu

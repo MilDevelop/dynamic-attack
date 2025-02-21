@@ -12,6 +12,8 @@ var conection_players : int = 0
 @onready var ctr = $CanvasLayer
 @onready var Game = $"../Game"
 @onready var Paralax = $"../Game/ParallaxBackground"
+@onready var GUI = $"../Game/GUI"
+@onready var IP_Ref = $"../Game/GUI/TemporaryMenu/Panel/VBoxContainer/ReferenceToIP"
 	
 func _ready() -> void:
 	pass
@@ -30,10 +32,7 @@ func _on_join_pressed() -> void:
 		iter.hide()
 	if peer:
 		print("Your join on server " + str(PORT))
-	$ParallaxBackground.visible = false
-	Paralax.visible = true
-	Game.visible = true
-	ctr.visible = false
+	hide_items()
 
 	
 func _add_player(id = 1):
@@ -53,10 +52,8 @@ func _on_host_pressed() -> void:
 	multiplayer.peer_disconnected.connect(_remove_player)
 	_add_player()
 	UPnP_setup()
-	$ParallaxBackground.visible = false
-	Paralax.visible = true
-	Game.visible = true
-	ctr.visible = false
+	hide_items()
+	
 	
 func _remove_player(peer_id):
 	var format_string = "../{str}"
@@ -78,6 +75,7 @@ func UPnP_setup():
 		for address in IP.get_local_addresses():
 			if (address.split('.')[0] == "192"):
 				ip = address
+		IP_Ref.text = IP_Ref.text + '\n' + "%s" % ip
 		print("Your local IP-Adress: %s" % ip)
 		return
 	assert(discover_result == UPNP.UPNP_RESULT_SUCCESS, \
@@ -87,5 +85,13 @@ func UPnP_setup():
 	var map_result = UPnP.add_port_mapping(PORT)
 	assert(map_result == UPNP.UPNP_RESULT_SUCCESS, \
 	"UPNP Discover failed %s" % map_result)
+	IP_Ref.text = IP_Ref.text + '\n' + "%s" % UPnP.query_external_address()
 	print("Successful connection, Join Address: %s" % UPnP.query_external_address())
 	
+	
+func hide_items() -> void:
+	$ParallaxBackground.visible = false
+	Paralax.visible = true
+	Game.visible = true
+	GUI.visible = true
+	ctr.visible = false

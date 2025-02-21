@@ -917,7 +917,7 @@ properties/10/spawn = true
 properties/10/replication_mode = 1
 properties/11/path = NodePath("AnimationPlayer:current_animation")
 properties/11/spawn = true
-properties/11/replication_mode = 2
+properties/11/replication_mode = 1
 properties/12/path = NodePath(".:scale")
 properties/12/spawn = true
 properties/12/replication_mode = 1
@@ -930,7 +930,7 @@ script = ExtResource("1_23ykw")
 position = Vector2(3, -10)
 scale = Vector2(3.18, 3.25676)
 sprite_frames = SubResource("SpriteFrames_8be60")
-animation = &"fallen for attack"
+animation = &"Attack Around"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
