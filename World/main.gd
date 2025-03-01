@@ -36,3 +36,7 @@ func _spawn(gamer, connection_players):
 
 func _on_resume_pressed() -> void:
 	Temporary_Menu = !Temporary_Menu
+
+func _on_quit_pressed() -> void:
+	pass
+	#multiplayer.peer_disconnected.connect(control._remove_player())

@@ -3,7 +3,7 @@ extends Control
 const PORT = 1999
 
 var peer = ENetMultiplayerPeer.new()
-var Room : String = ""
+var Room : String = "localhost"
 var conection_players : int = 0
 
 @export var player_scene : PackedScene
@@ -27,6 +27,7 @@ func _on_play_pressed() -> void:
 
 func _on_join_pressed() -> void:
 	peer.create_client(Room, PORT)
+	IP_Ref.text += Room
 	multiplayer.multiplayer_peer = peer
 	for iter in ctr.get_children():
 		iter.hide()
@@ -61,10 +62,10 @@ func _remove_player(peer_id):
 	var player = get_node_or_null(actual_string)
 	if player:
 		player.queue_free()
+	#show_items()
 
 func _on_enter_pressed() -> void:
 	if UserInput.text != "":
-		host_button.disabled = false
 		Room = UserInput.text
 
 func UPnP_setup():
@@ -75,7 +76,7 @@ func UPnP_setup():
 		for address in IP.get_local_addresses():
 			if (address.split('.')[0] == "192"):
 				ip = address
-		IP_Ref.text = IP_Ref.text + '\n' + "%s" % ip
+		IP_Ref.text = IP_Ref.text + "%s" % ip
 		print("Your local IP-Adress: %s" % ip)
 		return
 	assert(discover_result == UPNP.UPNP_RESULT_SUCCESS, \
@@ -85,7 +86,7 @@ func UPnP_setup():
 	var map_result = UPnP.add_port_mapping(PORT)
 	assert(map_result == UPNP.UPNP_RESULT_SUCCESS, \
 	"UPNP Discover failed %s" % map_result)
-	IP_Ref.text = IP_Ref.text + '\n' + "%s" % UPnP.query_external_address()
+	IP_Ref.text = IP_Ref.text + "%s" % UPnP.query_external_address()
 	print("Successful connection, Join Address: %s" % UPnP.query_external_address())
 	
 	
@@ -95,3 +96,10 @@ func hide_items() -> void:
 	Game.visible = true
 	GUI.visible = true
 	ctr.visible = false
+	
+func show_items() -> void:
+	$ParallaxBackground.visible = true
+	Paralax.visible = false
+	Game.visible = false
+	GUI.visible = false
+	ctr.visible = true
