@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://2ldlmdimw64p"]
 
-[ext_resource type="Script" path="res://Menu and Connection/control.gd" id="1_omsry"]
+[ext_resource type="Script" uid="uid://h3n0rb85u4ao" path="res://Menu and Connection/control.gd" id="1_omsry"]
 [ext_resource type="PackedScene" uid="uid://c3psn3meyx04p" path="res://Player/player.tscn" id="2_y7rsr"]
-[ext_resource type="Script" path="res://Menu and Connection/parallax_background.gd" id="3_5rlen"]
+[ext_resource type="Script" uid="uid://clvy8qktscoga" path="res://Menu and Connection/parallax_background.gd" id="3_5rlen"]
 [ext_resource type="Texture2D" uid="uid://ytylutwrwxv1" path="res://Textures/Glacial-mountains-parallax-background_vnitti/Layers/sky.png" id="3_uhqkt"]
 [ext_resource type="Texture2D" uid="uid://c2fsrcp8qxcq2" path="res://Textures/Glacial-mountains-parallax-background_vnitti/Layers/clouds_bg.png" id="4_j7tbj"]
 [ext_resource type="Texture2D" uid="uid://cwfsg8ifq7l4d" path="res://Textures/Glacial-mountains-parallax-background_vnitti/Layers/glacial_mountains_lightened.png" id="5_4rqp7"]

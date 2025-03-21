@@ -233,7 +233,6 @@ texture_progress = ExtResource("12_oe2er")
 texture_progress_offset = Vector2(43, 0)
 
 [node name="HP-Value" type="Label" parent="Game/GUI/HealthsBar"]
-visible = false
 layout_mode = 0
 offset_left = 13.0
 offset_top = 3.0
@@ -248,6 +247,8 @@ visible = false
 
 [node name="TestMobe" parent="Game" instance=ExtResource("13_jr3hh")]
 position = Vector2(664, 372)
+
+[node name="PlayersContainer" type="Node2D" parent="."]
 
 [connection signal="pressed" from="Game/GUI/TemporaryMenu/Panel/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="Game/GUI/TemporaryMenu/Panel/VBoxContainer/Quit" to="Control" method="_on_quit_pressed"]

@@ -22,20 +22,17 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func _on_play_pressed() -> void:
-	pass
 
 func _on_join_pressed() -> void:
 	peer.create_client(Room, PORT)
 	IP_Ref.text += Room
 	multiplayer.multiplayer_peer = peer
-	for iter in ctr.get_children():
-		iter.hide()
+	multiplayer.server_disconnected.connect(_on_quit_pressed)
 	if peer:
 		print("Your join on server " + str(PORT))
 	hide_items()
 
-	
+
 func _add_player(id = 1):
 	var pr = player_scene.instantiate()
 	pr.name = str(id)
@@ -43,7 +40,7 @@ func _add_player(id = 1):
 		conection_players += 1
 		Signals.emit_signal("transfer", pr, conection_players)
 		
-
+		
 func _on_host_pressed() -> void:
 	peer.create_server(PORT)
 	if peer:
@@ -54,19 +51,25 @@ func _on_host_pressed() -> void:
 	_add_player()
 	UPnP_setup()
 	hide_items()
-	
-	
+
 func _remove_player(peer_id):
 	var format_string = "../{str}"
 	var actual_string = format_string.format({"str": str(peer_id)})
 	var player = get_node_or_null(actual_string)
 	if player:
+		conection_players -= 1
 		player.queue_free()
-	#show_items()
 
 func _on_enter_pressed() -> void:
 	if UserInput.text != "":
 		Room = UserInput.text
+
+func _on_quit_pressed() -> void:
+	for node in get_tree().get_nodes_in_group("Player"):
+		node.queue_free()
+	multiplayer.multiplayer_peer.close()
+	multiplayer.set_deferred(&"multiplayer_peer", null)
+	show_items()
 
 func UPnP_setup():
 	var UPnP = UPNP.new()
@@ -92,14 +95,17 @@ func UPnP_setup():
 	
 func hide_items() -> void:
 	$ParallaxBackground.visible = false
+	$CanvasLayer.visible = false
 	Paralax.visible = true
 	Game.visible = true
 	GUI.visible = true
-	ctr.visible = false
+	
 	
 func show_items() -> void:
+	IP_Ref.text = ""
 	$ParallaxBackground.visible = true
+	$CanvasLayer.visible = true
 	Paralax.visible = false
 	Game.visible = false
 	GUI.visible = false
-	ctr.visible = true
+	

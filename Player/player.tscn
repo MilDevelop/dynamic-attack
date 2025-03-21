@@ -1,6 +1,6 @@
 [gd_scene load_steps=81 format=3 uid="uid://c3psn3meyx04p"]
 
-[ext_resource type="Script" path="res://Player/player.gd" id="1_23ykw"]
+[ext_resource type="Script" uid="uid://dpjlwt00ter3p" path="res://Player/player.gd" id="1_23ykw"]
 [ext_resource type="Texture2D" uid="uid://cb1jyh8580na1" path="res://Textures/adventurer-Sheet.png" id="2_i8krh"]
 [ext_resource type="Texture2D" uid="uid://b422fms64tsmh" path="res://Textures/adventurer-v1.5-Sheet.png" id="3_psyry"]
 [ext_resource type="Texture2D" uid="uid://d4eifisp1im4" path="res://Textures/adventurer-hand-combat-Sheet.png" id="4_fjqp5"]
@@ -847,18 +847,18 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x0mvr"]
 _data = {
-"Attack Around": SubResource("Animation_bal0y"),
-"Attack Up": SubResource("Animation_o4wyf"),
-"Attack down": SubResource("Animation_xhw1u"),
-"Fall": SubResource("Animation_30tri"),
-"Fall Attack": SubResource("Animation_45p5m"),
-"Hit": SubResource("Animation_t7coa"),
-"IDEL": SubResource("Animation_nwwq6"),
-"Jump": SubResource("Animation_xmcw3"),
-"RESET": SubResource("Animation_y1iu2"),
-"Run": SubResource("Animation_1mrg1"),
-"Slide": SubResource("Animation_bacvu"),
-"fallen for attack": SubResource("Animation_12aql")
+&"Attack Around": SubResource("Animation_bal0y"),
+&"Attack Up": SubResource("Animation_o4wyf"),
+&"Attack down": SubResource("Animation_xhw1u"),
+&"Fall": SubResource("Animation_30tri"),
+&"Fall Attack": SubResource("Animation_45p5m"),
+&"Hit": SubResource("Animation_t7coa"),
+&"IDEL": SubResource("Animation_nwwq6"),
+&"Jump": SubResource("Animation_xmcw3"),
+&"RESET": SubResource("Animation_y1iu2"),
+&"Run": SubResource("Animation_1mrg1"),
+&"Slide": SubResource("Animation_bacvu"),
+&"fallen for attack": SubResource("Animation_12aql")
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8hq5r"]
@@ -922,7 +922,7 @@ properties/12/path = NodePath(".:scale")
 properties/12/spawn = true
 properties/12/replication_mode = 1
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
 script = ExtResource("1_23ykw")
 
@@ -934,7 +934,7 @@ animation = &"Attack Around"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_x0mvr")
+&"": SubResource("AnimationLibrary_x0mvr")
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
