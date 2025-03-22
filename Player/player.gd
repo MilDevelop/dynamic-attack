@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 signal health_changed(new_health)
-
+signal new_winner(winner)
 
 enum {
 	IDLE,
@@ -57,6 +57,7 @@ var Player_Name = ""
 var damage_current = 0
 var given_velocity = Vector2(0, 0)
 var enemy_position_x : int
+var Winner : bool
 
 var Hitten = false
 
@@ -80,6 +81,7 @@ func _ready() -> void:
 	Hit_Fall.disabled = true
 	if multiplayer.get_unique_id() == get_multiplayer_authority():
 		health_changed.connect(get_parent()._on_player_health_changed)
+		new_winner.connect(get_parent()._on_new_winner)
 
 func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
@@ -280,10 +282,13 @@ func death_and_reboot():
 	rng.randomize()
 	if Host_Player:
 		position = Spawn_Host[rng.randi_range(0, 2)]
+		Winner = false
 	else:
 		position = Spawn_Guest[rng.randi_range(0, 2)]
+		Winner = true
 	velocity = Vector2.ZERO
 	health = max_hp
+	emit_signal("new_winner", Winner)
 	emit_signal("health_changed", health)
 
 func define_hign_damage(high):

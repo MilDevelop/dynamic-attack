@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dki78b71pr0ox"]
+[gd_scene load_steps=18 format=3 uid="uid://dki78b71pr0ox"]
 
 [ext_resource type="Script" uid="uid://bdle02vlj43xn" path="res://World/main.gd" id="1_a5u3i"]
 [ext_resource type="PackedScene" uid="uid://2ldlmdimw64p" path="res://Menu and Connection/control.tscn" id="2_noabd"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://b6q3jcm3e72an" path="res://Textures/Individual Sprites/health_bar/health_bar.png" id="12_oe2er"]
 [ext_resource type="PackedScene" uid="uid://c3uu3wflltxn7" path="res://World/temporary_menu.tscn" id="13_871ix"]
 [ext_resource type="PackedScene" uid="uid://ceotlbyqwmmi3" path="res://World/test_mobe.tscn" id="13_jr3hh"]
+[ext_resource type="PackedScene" uid="uid://sfp7krl8b28r" path="res://World/counters.tscn" id="14_ovush"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4ju0b"]
 texture = ExtResource("10_2eia8")
@@ -152,7 +153,7 @@ offset_right = 587.0
 offset_bottom = 286.0
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("uid://c3psn3meyx04p")
+_spawnable_scenes = PackedStringArray("uid://c3psn3meyx04p", "uid://sfp7krl8b28r")
 spawn_path = NodePath("..")
 
 [node name="Game" type="Node2D" parent="."]
@@ -246,6 +247,8 @@ horizontal_alignment = 1
 [node name="TemporaryMenu" parent="Game/GUI" instance=ExtResource("13_871ix")]
 visible = false
 
+[node name="Counters" parent="Game/GUI" instance=ExtResource("14_ovush")]
+
 [node name="TestMobe" parent="Game" instance=ExtResource("13_jr3hh")]
 position = Vector2(664, 372)
 
@@ -254,3 +257,4 @@ position = Vector2(664, 372)
 
 [editable path="Control"]
 [editable path="Game/GUI/TemporaryMenu"]
+[editable path="Game/GUI/Counters"]

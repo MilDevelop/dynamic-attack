@@ -6,24 +6,33 @@ extends Node2D
 @onready var player = $Player
 @onready var Background = $Game/ParallaxBackground
 @onready var temp_mn = $Game/GUI/TemporaryMenu
+@onready var counterHost = $Game/GUI/Counters/CounterHost
+@onready var counterGuest = $Game/GUI/Counters/CounterGuest
 
 var Num_Plr : int = 0
 var Temporary_Menu : bool = false
+var Wins : Array
 
 func _ready() -> void:
 	Signals.transfer.connect(_spawn)
 	Signals.player_number.emit(Num_Plr) ### ???
 	heatlhs_bar.max_value = 100
 	heatlhs_bar.value = 78
-
+	Wins = [0, 0]
+	
 func _process(delta: float) -> void:
+	counterHost.frame = Wins[0]
+	counterGuest.frame = Wins[1]
 	if Input.is_action_just_pressed("ui_cancel"):
 		Temporary_Menu = !Temporary_Menu
-	
+
 	if Temporary_Menu:
 		temp_mn.show()
 	else:
 		temp_mn.hide()
+		
+	#if Wins[0] == 3 or Wins[1] == 3:
+		#Wins = [0, 0]
 
 func _on_player_health_changed(new_health: int) -> void:
 	heatlhs_bar.value = int((new_health * 78) / 100)
@@ -33,6 +42,12 @@ func _spawn(gamer, connection_players):
 	call_deferred("add_child", gamer)
 	Num_Plr = connection_players
 
-
+func _on_new_winner(winner_player : bool):
+	print(winner_player)
+	if winner_player == true: #If Host player
+		Wins[0] += 1
+		return
+	Wins[1] += 1
+	
 func _on_resume_pressed() -> void:
 	Temporary_Menu = !Temporary_Menu
