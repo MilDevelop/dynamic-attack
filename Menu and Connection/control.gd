@@ -4,7 +4,6 @@ const PORT = 1999
 
 var peer = ENetMultiplayerPeer.new()
 var Room : String = "localhost"
-var conection_players : int = 0
 
 @export var player_scene : PackedScene
 @onready var host_button = $CanvasLayer/MainMenu/MarginContainer/VBoxContainer/Host
@@ -37,8 +36,8 @@ func _add_player(id = 1):
 	var pr = player_scene.instantiate()
 	pr.name = str(id)
 	if multiplayer.is_server():
-		conection_players += 1
-		Signals.emit_signal("transfer", pr, conection_players)
+		Signals.Number_of_Players += 1
+		Signals.emit_signal("transfer", pr)
 		
 		
 func _on_host_pressed() -> void:
@@ -57,7 +56,7 @@ func _remove_player(peer_id):
 	var actual_string = format_string.format({"str": str(peer_id)})
 	var player = get_node_or_null(actual_string)
 	if player:
-		conection_players -= 1
+		Signals.Number_of_Players -= 1
 		player.queue_free()
 
 func _on_enter_pressed() -> void:
@@ -66,6 +65,7 @@ func _on_enter_pressed() -> void:
 
 func _on_quit_pressed() -> void:
 	for node in get_tree().get_nodes_in_group("Player"):
+		node.get_parent()._ready()
 		node.queue_free()
 	multiplayer.multiplayer_peer.close()
 	multiplayer.set_deferred(&"multiplayer_peer", null)

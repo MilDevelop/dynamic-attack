@@ -1,37 +1,37 @@
 [gd_scene load_steps=8 format=3 uid="uid://sfp7krl8b28r"]
 
-[ext_resource type="Texture2D" uid="uid://ch6nf3ib15wg7" path="res://Textures/ouFNAq-Photoroom.png" id="1_cdv8h"]
+[ext_resource type="Texture2D" uid="uid://x0ycncux7beu" path="res://Textures/Numbers-Textures-Photoroom.png" id="1_n2aua"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4pper"]
-atlas = ExtResource("1_cdv8h")
-region = Rect2(30, 0, 125, 248)
+[sub_resource type="AtlasTexture" id="AtlasTexture_eunwn"]
+atlas = ExtResource("1_n2aua")
+region = Rect2(20, 0, 77, 154)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r6hqv"]
-atlas = ExtResource("1_cdv8h")
-region = Rect2(155, 0, 125, 248)
+[sub_resource type="AtlasTexture" id="AtlasTexture_qrvuv"]
+atlas = ExtResource("1_n2aua")
+region = Rect2(97, 0, 77, 154)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lh7yw"]
-atlas = ExtResource("1_cdv8h")
-region = Rect2(280, 0, 125, 248)
+[sub_resource type="AtlasTexture" id="AtlasTexture_l7rdm"]
+atlas = ExtResource("1_n2aua")
+region = Rect2(174, 0, 77, 154)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_scvq1"]
-atlas = ExtResource("1_cdv8h")
-region = Rect2(405, 0, 125, 248)
+[sub_resource type="AtlasTexture" id="AtlasTexture_6viuh"]
+atlas = ExtResource("1_n2aua")
+region = Rect2(251, 0, 77, 154)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_t6d4n"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4pper")
+"texture": SubResource("AtlasTexture_eunwn")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_r6hqv")
+"texture": SubResource("AtlasTexture_qrvuv")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_lh7yw")
+"texture": SubResource("AtlasTexture_l7rdm")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_scvq1")
+"texture": SubResource("AtlasTexture_6viuh")
 }],
 "loop": true,
 "name": &"plus",

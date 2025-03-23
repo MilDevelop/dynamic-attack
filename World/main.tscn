@@ -153,7 +153,7 @@ offset_right = 587.0
 offset_bottom = 286.0
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("uid://c3psn3meyx04p", "uid://sfp7krl8b28r")
+_spawnable_scenes = PackedStringArray("uid://c3psn3meyx04p")
 spawn_path = NodePath("..")
 
 [node name="Game" type="Node2D" parent="."]
@@ -248,6 +248,14 @@ horizontal_alignment = 1
 visible = false
 
 [node name="Counters" parent="Game/GUI" instance=ExtResource("14_ovush")]
+
+[node name="CounterHost" parent="Game/GUI/Counters" index="0"]
+position = Vector2(525, 37)
+scale = Vector2(0.516689, 0.539066)
+
+[node name="CounterGuest" parent="Game/GUI/Counters" index="1"]
+position = Vector2(623, 38)
+scale = Vector2(0.516689, 0.545559)
 
 [node name="TestMobe" parent="Game" instance=ExtResource("13_jr3hh")]
 position = Vector2(664, 372)
