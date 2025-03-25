@@ -66,6 +66,7 @@ func _on_enter_pressed() -> void:
 func _on_quit_pressed() -> void:
 	for node in get_tree().get_nodes_in_group("Player"):
 		node.get_parent()._ready()
+		Signals.Number_of_Players -= 1
 		node.queue_free()
 	multiplayer.multiplayer_peer.close()
 	multiplayer.set_deferred(&"multiplayer_peer", null)
@@ -102,7 +103,7 @@ func hide_items() -> void:
 	
 	
 func show_items() -> void:
-	IP_Ref.text = ""
+	IP_Ref.text = "Room's IP: \n"
 	$ParallaxBackground.visible = true
 	$CanvasLayer.visible = true
 	Paralax.visible = false

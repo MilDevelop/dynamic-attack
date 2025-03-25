@@ -49,6 +49,7 @@ var attack_type = true #Attack up
 var slide_cooldawn = 100
 var Attack_key = false
 var Attack_cooldown = false
+var Hitten = false
 var High = []
 
 ### SERVER PARAMETERS
@@ -56,10 +57,10 @@ var Host_Player = false
 var Player_Name = ""
 var damage_current = 0
 var given_velocity = Vector2(0, 0)
+var deaths : int = 0
 var enemy_position_x : int
 var Winner : bool
 
-var Hitten = false
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
@@ -86,7 +87,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
 		if position.y > 650:
-			death_and_reboot()
+			rpc("death_and_reboot")
 		var direction := Input.get_axis("ui_left", "ui_right")
 		### BASEMENT STATE MACHINE
 		match state: 
@@ -274,20 +275,26 @@ func get_damage(get_damage_current, got_velocity):
 		set_velocity(got_velocity)
 	emit_signal("health_changed", health)
 	if health <= 0:
-		death_and_reboot()
-		
+		rpc("death_and_reboot")
+
+@rpc("any_peer", "call_local")
 func death_and_reboot():
 	health = 0
-	var rng = RandomNumberGenerator.new()
-	rng.randomize()
-	if Host_Player:
-		position = Spawn_Host[rng.randi_range(0, 2)]
-		Winner = false
+	deaths += 1
+	if deaths >= 3:
+		deaths = 0
+		queue_free()
 	else:
-		position = Spawn_Guest[rng.randi_range(0, 2)]
-		Winner = true
-	velocity = Vector2.ZERO
-	health = max_hp
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+		if Host_Player:
+			position = Spawn_Host[rng.randi_range(0, 2)]
+			Winner = false
+		else:
+			position = Spawn_Guest[rng.randi_range(0, 2)]
+			Winner = true
+		velocity = Vector2.ZERO
+		health = max_hp
 	emit_signal("new_winner", Winner)
 	emit_signal("health_changed", health)
 

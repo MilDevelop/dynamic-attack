@@ -262,6 +262,7 @@ position = Vector2(664, 372)
 
 [connection signal="pressed" from="Game/GUI/TemporaryMenu/Panel/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="Game/GUI/TemporaryMenu/Panel/VBoxContainer/Quit" to="Control" method="_on_quit_pressed"]
+[connection signal="pressed" from="Game/GUI/TemporaryMenu/Panel/VBoxContainer/New Game" to="." method="_on_new_game_pressed"]
 
 [editable path="Control"]
 [editable path="Game/GUI/TemporaryMenu"]
