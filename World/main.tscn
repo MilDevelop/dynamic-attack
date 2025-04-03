@@ -1,7 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://dki78b71pr0ox"]
+[gd_scene load_steps=30 format=3 uid="uid://dki78b71pr0ox"]
 
 [ext_resource type="Script" uid="uid://bdle02vlj43xn" path="res://World/main.gd" id="1_a5u3i"]
 [ext_resource type="PackedScene" uid="uid://2ldlmdimw64p" path="res://Menu and Connection/control.tscn" id="2_noabd"]
+[ext_resource type="Script" uid="uid://brfxkl8ioncl7" path="res://World/game.gd" id="3_4pper"]
 [ext_resource type="Texture2D" uid="uid://ytylutwrwxv1" path="res://Textures/Glacial-mountains-parallax-background_vnitti/Layers/sky.png" id="3_knlfl"]
 [ext_resource type="Texture2D" uid="uid://c2fsrcp8qxcq2" path="res://Textures/Glacial-mountains-parallax-background_vnitti/Layers/clouds_bg.png" id="4_mctev"]
 [ext_resource type="Texture2D" uid="uid://cwfsg8ifq7l4d" path="res://Textures/Glacial-mountains-parallax-background_vnitti/Layers/glacial_mountains_lightened.png" id="5_l81nc"]
@@ -15,6 +16,8 @@
 [ext_resource type="PackedScene" uid="uid://c3uu3wflltxn7" path="res://World/temporary_menu.tscn" id="13_871ix"]
 [ext_resource type="PackedScene" uid="uid://ceotlbyqwmmi3" path="res://World/test_mobe.tscn" id="13_jr3hh"]
 [ext_resource type="PackedScene" uid="uid://sfp7krl8b28r" path="res://World/counters.tscn" id="14_ovush"]
+[ext_resource type="Texture2D" uid="uid://cysqbby30usat" path="res://Textures/Torch Animated.png" id="17_r6hqv"]
+[ext_resource type="Texture2D" uid="uid://dbggc35iu6ioh" path="res://Textures/2d_lights_and_shadows_neutral_point_light.webp" id="18_lh7yw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4ju0b"]
 texture = ExtResource("10_2eia8")
@@ -143,6 +146,70 @@ texture = ExtResource("10_2eia8")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_4ju0b")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_lh7yw"]
+atlas = ExtResource("17_r6hqv")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_scvq1"]
+atlas = ExtResource("17_r6hqv")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m0hhd"]
+atlas = ExtResource("17_r6hqv")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rqan7"]
+atlas = ExtResource("17_r6hqv")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_44n3w"]
+atlas = ExtResource("17_r6hqv")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2sp6a"]
+atlas = ExtResource("17_r6hqv")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6y664"]
+atlas = ExtResource("17_r6hqv")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixdso"]
+atlas = ExtResource("17_r6hqv")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5iy0x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lh7yw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_scvq1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m0hhd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rqan7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_44n3w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2sp6a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6y664")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ixdso")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_a5u3i")
 
@@ -158,8 +225,10 @@ spawn_path = NodePath("..")
 
 [node name="Game" type="Node2D" parent="."]
 visible = false
+script = ExtResource("3_4pper")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="Game"]
+layer = -1
 visible = false
 
 [node name="ParallaxLayer1" type="ParallaxLayer" parent="Game/ParallaxBackground"]
@@ -260,9 +329,47 @@ scale = Vector2(0.516689, 0.545559)
 [node name="TestMobe" parent="Game" instance=ExtResource("13_jr3hh")]
 position = Vector2(664, 372)
 
+[node name="Light" type="Node2D" parent="Game"]
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="Game/Light"]
+energy = 0.85
+blend_mode = 1
+range_layer_min = -1
+
+[node name="DayNight" type="Timer" parent="Game/Light"]
+wait_time = 30.0
+autostart = true
+
+[node name="PointLighters" type="Node2D" parent="Game/Light"]
+
+[node name="AnimatedWorldSptites" type="Node2D" parent="Game/Light/PointLighters"]
+
+[node name="Torch1" type="AnimatedSprite2D" parent="Game/Light/PointLighters/AnimatedWorldSptites"]
+position = Vector2(103, 344)
+scale = Vector2(1.82422, 1.78906)
+sprite_frames = SubResource("SpriteFrames_5iy0x")
+
+[node name="Torch2" type="AnimatedSprite2D" parent="Game/Light/PointLighters/AnimatedWorldSptites"]
+position = Vector2(1041, 327)
+scale = Vector2(1.8479, 1.80566)
+sprite_frames = SubResource("SpriteFrames_5iy0x")
+
+[node name="TorchLight1" type="PointLight2D" parent="Game/Light/PointLighters"]
+position = Vector2(100, 332)
+scale = Vector2(1.0293, 1.04492)
+color = Color(1, 0.705882, 0.180392, 1)
+texture = ExtResource("18_lh7yw")
+
+[node name="TorchLight2" type="PointLight2D" parent="Game/Light/PointLighters"]
+position = Vector2(1040, 316)
+scale = Vector2(1.0293, 1.04492)
+color = Color(1, 0.788235, 0.176471, 1)
+texture = ExtResource("18_lh7yw")
+
 [connection signal="pressed" from="Game/GUI/TemporaryMenu/Panel/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="Game/GUI/TemporaryMenu/Panel/VBoxContainer/Quit" to="Control" method="_on_quit_pressed"]
 [connection signal="pressed" from="Game/GUI/TemporaryMenu/Panel/VBoxContainer/New Game" to="." method="_on_new_game_pressed"]
+[connection signal="timeout" from="Game/Light/DayNight" to="Game" method="_on_day_night_timeout"]
 
 [editable path="Control"]
 [editable path="Game/GUI/TemporaryMenu"]

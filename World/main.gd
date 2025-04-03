@@ -12,7 +12,6 @@ extends Node2D
 
 var Temporary_Menu : bool = false
 var Wins : Array
-var LastConectionPlayer 
 
 func _ready() -> void:
 	Signals.transfer.connect(_spawn)
@@ -31,9 +30,6 @@ func _process(delta: float) -> void:
 		temp_mn.show()
 	else:
 		temp_mn.hide()
-		
-	if Wins[0] == 3 or Wins[1] == 3:
-		pass
 	
 	if Signals.Number_of_Players == 1:
 		Wins = [0, 0]
@@ -46,10 +42,12 @@ func _process(delta: float) -> void:
 func _on_player_health_changed(new_health: int) -> void:
 	heatlhs_bar.value = int((new_health * 78) / 100)
 	HP_Value.text = str(new_health)
-	
+
+func zero_value_GUI():
+	heatlhs_bar.value = 0
+
 func _spawn(gamer):
 	call_deferred("add_child", gamer)
-	LastConectionPlayer = gamer
 
 func _on_new_winner(winner_player : bool):
 	if winner_player: 
@@ -69,4 +67,4 @@ func _on_resume_pressed() -> void:
 	Temporary_Menu = !Temporary_Menu
 	
 func _on_new_game_pressed() -> void:
-	_spawn(LastConectionPlayer)
+	control.respawn_everyone.rpc()

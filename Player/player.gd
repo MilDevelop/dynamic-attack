@@ -275,16 +275,13 @@ func get_damage(get_damage_current, got_velocity):
 		set_velocity(got_velocity)
 	emit_signal("health_changed", health)
 	if health <= 0:
-		rpc("death_and_reboot")
+		death_and_reboot.rpc()
 
 @rpc("any_peer", "call_local")
 func death_and_reboot():
 	health = 0
 	deaths += 1
-	if deaths >= 3:
-		deaths = 0
-		queue_free()
-	else:
+	if deaths < 3:
 		var rng = RandomNumberGenerator.new()
 		rng.randomize()
 		if Host_Player:
@@ -295,8 +292,16 @@ func death_and_reboot():
 			Winner = true
 		velocity = Vector2.ZERO
 		health = max_hp
-	emit_signal("new_winner", Winner)
-	emit_signal("health_changed", health)
+		emit_signal("health_changed", health)
+		emit_signal("new_winner", Winner)
+	else:
+		deaths = 0
+		health = 0
+		emit_signal("health_changed", health)
+		emit_signal("new_winner", Winner)
+		queue_free()
+	
+	
 
 func define_hign_damage(high):
 	return round((abs(high[1] - high[0])) / 100) * Base_Fall_damage

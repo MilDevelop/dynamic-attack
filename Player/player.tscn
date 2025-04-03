@@ -1,9 +1,10 @@
-[gd_scene load_steps=81 format=3 uid="uid://c3psn3meyx04p"]
+[gd_scene load_steps=82 format=3 uid="uid://c3psn3meyx04p"]
 
 [ext_resource type="Script" uid="uid://dpjlwt00ter3p" path="res://Player/player.gd" id="1_23ykw"]
 [ext_resource type="Texture2D" uid="uid://cb1jyh8580na1" path="res://Textures/adventurer-Sheet.png" id="2_i8krh"]
 [ext_resource type="Texture2D" uid="uid://b422fms64tsmh" path="res://Textures/adventurer-v1.5-Sheet.png" id="3_psyry"]
 [ext_resource type="Texture2D" uid="uid://d4eifisp1im4" path="res://Textures/adventurer-hand-combat-Sheet.png" id="4_fjqp5"]
+[ext_resource type="Texture2D" uid="uid://dbggc35iu6ioh" path="res://Textures/2d_lights_and_shadows_neutral_point_light.webp" id="5_k53q1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ak13x"]
 atlas = ExtResource("2_i8krh")
@@ -1006,6 +1007,12 @@ offset_top = -62.0
 offset_right = 38.0
 offset_bottom = -39.0
 horizontal_alignment = 1
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(1, -11.875)
+scale = Vector2(0.464844, 0.415039)
+energy = 0.5
+texture = ExtResource("5_k53q1")
 
 [connection signal="area_entered" from="AttackDirectionUP/HitBoxUP" to="." method="_on_hit_box_up_area_entered"]
 [connection signal="area_entered" from="AttackDirectionDOWN/hitBoxDOWN" to="." method="_on_hit_box_down_area_entered"]

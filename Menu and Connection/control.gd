@@ -72,6 +72,18 @@ func _on_quit_pressed() -> void:
 	multiplayer.set_deferred(&"multiplayer_peer", null)
 	show_items()
 
+@rpc("call_local", "reliable")
+func respawn_everyone(): 
+	if multiplayer.is_server():
+		for node in get_tree().get_nodes_in_group("Player"):
+			Signals.Number_of_Players -= 1
+			node.get_parent().remove_child(node)
+			node.queue_free()
+		_add_player()
+		for id : int in multiplayer.get_peers():
+			_add_player(id)
+	get_parent()._ready()
+
 func UPnP_setup():
 	var UPnP = UPNP.new()
 	var discover_result = UPnP.discover()
