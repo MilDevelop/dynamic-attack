@@ -35,6 +35,7 @@ var slide = false
 @onready var anim = $AnimatedSprite2D
 @onready var AnimPlayer = $AnimationPlayer
 @onready var NickName = $PlayerLabel
+@onready var Light = $PointLight2D
 @onready var HB  = $Game/HealthsBar
 @onready var Hit_UP =  $"AttackDirectionUP/HitBoxUP/HIt-up"
 @onready var Hit_Down = $"AttackDirectionDOWN/hitBoxDOWN/Hit-Down"
@@ -88,6 +89,19 @@ func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
 		if position.y > 650:
 			rpc("death_and_reboot")
+		
+		#BASEMENT LIGHT MACHINE
+		match Signals.TimesOfDay:
+			0:
+				var tween = get_tree().create_tween()
+				tween.tween_property(Light, "energy", 0.0, 30)
+			1:
+				Light.energy = 0.0
+			2:
+				var tween = get_tree().create_tween()
+				tween.tween_property(Light, "energy", 0.85, 30)
+			3:
+				Light.energy = 0.85
 		var direction := Input.get_axis("ui_left", "ui_right")
 		### BASEMENT STATE MACHINE
 		match state: 

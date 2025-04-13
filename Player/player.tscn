@@ -922,6 +922,9 @@ properties/11/replication_mode = 1
 properties/12/path = NodePath(".:scale")
 properties/12/spawn = true
 properties/12/replication_mode = 1
+properties/13/path = NodePath("PointLight2D:energy")
+properties/13/spawn = true
+properties/13/replication_mode = 1
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
@@ -1009,9 +1012,9 @@ offset_bottom = -39.0
 horizontal_alignment = 1
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(1, -11.875)
-scale = Vector2(0.464844, 0.415039)
-energy = 0.5
+position = Vector2(0, -5)
+scale = Vector2(0.464844, 0.476563)
+energy = 0.85
 texture = ExtResource("5_k53q1")
 
 [connection signal="area_entered" from="AttackDirectionUP/HitBoxUP" to="." method="_on_hit_box_up_area_entered"]

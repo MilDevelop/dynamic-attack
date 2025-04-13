@@ -1,5 +1,6 @@
 extends Node
 
+var TimesOfDay : int = 0
 var Number_of_Players : int = 0
 
 func _conditional():

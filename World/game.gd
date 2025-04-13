@@ -10,10 +10,14 @@ enum {
 @onready var light = $Light/DirectionalLight2D
 @onready var Lighters = $Light/PointLighters/AnimatedWorldSptites
 @onready var Pointers = $Light/PointLighters
+@onready var Snow = $Snow
 
 var state = MORNING
 
 func _process(delta: float) -> void:
+	
+	
+	Signals.TimesOfDay = state
 	for nodes in Lighters.get_children():
 		nodes.play("default")
 	
@@ -47,6 +51,6 @@ func dynamic_light(light : bool):
 func _on_day_night_timeout() -> void:
 	if state == 3:
 		state = 0
-		return
-	state += 1
-	
+	else: 
+		state += 1
+		
