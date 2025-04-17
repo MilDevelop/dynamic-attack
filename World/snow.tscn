@@ -6,8 +6,8 @@ emission_shape = 1
 emission_sphere_radius = 250.0
 velocity_pivot = Vector3(1000, 10, 0)
 direction = Vector3(1, 10, 0)
-initial_velocity_min = 15.0
-initial_velocity_max = 40.0
+initial_velocity_min = 50.0
+initial_velocity_max = 80.0
 angular_velocity_min = 22.15
 angular_velocity_max = 148.97
 radial_velocity_min = -2.23517e-05
@@ -22,6 +22,6 @@ turbulence_noise_strength = 0.0
 
 [node name="Snow" type="GPUParticles2D"]
 scale = Vector2(4.8, 2.92)
-amount = 80
+amount = 110
 lifetime = 4.0
 process_material = SubResource("ParticleProcessMaterial_ov2c2")

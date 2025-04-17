@@ -225,11 +225,8 @@ _spawnable_scenes = PackedStringArray("uid://c3psn3meyx04p")
 spawn_path = NodePath("..")
 
 [node name="Game" type="Node2D" parent="."]
+visible = false
 script = ExtResource("3_4pper")
-
-[node name="Snow" parent="Game" instance=ExtResource("4_scvq1")]
-position = Vector2(668, 353)
-scale = Vector2(5.76, 6.6)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="Game"]
 layer = -1
@@ -370,10 +367,22 @@ scale = Vector2(1.0293, 1.04492)
 color = Color(1, 0.788235, 0, 1)
 texture = ExtResource("18_lh7yw")
 
+[node name="Weather" type="Node2D" parent="Game"]
+
+[node name="Snow" parent="Game/Weather" instance=ExtResource("4_scvq1")]
+position = Vector2(805, 304)
+scale = Vector2(5.76, 6.6)
+amount = 200
+
+[node name="ChangeWeather" type="Timer" parent="Game/Weather"]
+wait_time = 90.0
+autostart = true
+
 [connection signal="pressed" from="Game/GUI/TemporaryMenu/Panel/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="Game/GUI/TemporaryMenu/Panel/VBoxContainer/Quit" to="Control" method="_on_quit_pressed"]
 [connection signal="pressed" from="Game/GUI/TemporaryMenu/Panel/VBoxContainer/New Game" to="." method="_on_new_game_pressed"]
 [connection signal="timeout" from="Game/Light/DayNight" to="Game" method="_on_day_night_timeout"]
+[connection signal="timeout" from="Game/Weather/ChangeWeather" to="Game" method="_on_change_weather_timeout"]
 
 [editable path="Control"]
 [editable path="Game/GUI/TemporaryMenu"]
