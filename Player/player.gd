@@ -62,11 +62,13 @@ var deaths : int = 0
 var enemy_position_x : int
 var Winner : bool
 
+###LIGHT
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
 	
 func _ready() -> void:
+	Light.energy = Signals.LightTime
 	Player_Name = name
 	Host_Player = get_root(Player_Name)
 	if Host_Player:
@@ -81,28 +83,31 @@ func _ready() -> void:
 	Hit_Down.disabled = true
 	Hit_Slide.disabled = true
 	Hit_Fall.disabled = true
+	
 	if multiplayer.get_unique_id() == get_multiplayer_authority():
 		health_changed.connect(get_parent()._on_player_health_changed)
 		new_winner.connect(get_parent()._on_new_winner)
-
+	
 func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
 		if position.y > 650:
 			rpc("death_and_reboot")
+		var direction := Input.get_axis("ui_left", "ui_right")
 		
-		#BASEMENT LIGHT MACHINE
 		match Signals.TimesOfDay:
 			0:
 				var tween = get_tree().create_tween()
 				tween.tween_property(Light, "energy", 0.0, 30)
 			1:
-				Light.energy = 0.0
+				Light.energy = 0
 			2:
 				var tween = get_tree().create_tween()
 				tween.tween_property(Light, "energy", 0.85, 30)
 			3:
 				Light.energy = 0.85
-		var direction := Input.get_axis("ui_left", "ui_right")
+			
+		Signals.LightTime = Light.energy
+		
 		### BASEMENT STATE MACHINE
 		match state: 
 			MOVE:
@@ -274,6 +279,7 @@ func get_damage_state():
 	if AnimPlayer.current_animation != "Hit":
 		AnimPlayer.play("Hit")
 	state = MOVE
+
 
 @rpc("call_local", "reliable", "any_peer")
 func get_damage(get_damage_current, got_velocity):
