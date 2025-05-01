@@ -19,19 +19,17 @@ enum {
 @onready var Snow : GPUParticles2D = $Weather/Snow
 @onready var ParticlesOfSnow : ParticleProcessMaterial = $Weather/Snow.process_material
 
-var state = MORNING
-var weather_state : int
+var state : int = MORNING
+var weather_state : int = SUNNY
+var rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
-	if Signals.Number_of_Players == 1 and multiplayer.get_unique_id() != 1:
-		pass
-	else:
-		var rng = RandomNumberGenerator.new()
+	if multiplayer.get_unique_id() == 1:
 		rng.randomize()
 		weather_state = rng.randi_range(0, 2)
 
-
 func _process(delta: float) -> void:
+	Signals.time.emit(light.energy)
 	Signals.TimesOfDay = state
 	for nodes in Lighters.get_children():
 		nodes.play("default")
@@ -42,13 +40,17 @@ func _process(delta: float) -> void:
 		EVENING:
 			evening_state.rpc()
 			
-	#match weather_state:
-		#SUNNY:
-			#sunny_state.rpc()
-		#SNOW:
-			#snow_state.rpc()
-		#STORM:
-			#storm_state.rpc()
+	change_weather(weather_state)
+	
+@rpc("any_peer" ,"call_local", "reliable")
+func change_weather(weather):
+	match weather_state:
+		SUNNY:
+			sunny_state.rpc()
+		SNOW:
+			snow_state.rpc()
+		STORM:
+			storm_state.rpc()
 
 @rpc("any_peer" ,"call_local", "reliable")
 func morning_state():
@@ -71,24 +73,32 @@ func dynamic_light(light : bool):
 		if node.name != "AnimatedWorldSptites":
 			tween_substrack.tween_property(node, "energy", point, 30)
 			
-#@rpc("any_peer", "call_local", "reliable")
-#func sunny_state():
-	#Snow.amount = 1
-	#Snow.emitting = false
-#
-#@rpc("any_peer", "call_local", "reliable")
-#func snow_state():
-	#Snow.emitting = true
-	#var tween = get_tree().create_tween()
+@rpc("any_peer" ,"call_local")
+func sunny_state():
+	Snow.amount = 0
+	Snow.emitting = false
+
+@rpc("any_peer" ,"call_local")
+func snow_state():
+	Snow.emitting = true
+	Snow.amount = 30
+	ParticlesOfSnow.initial_velocity_max = 0.0
+	ParticlesOfSnow.initial_velocity_min = 0.0
+	#var tween = get_tree().create_tween().bind_node(self).set_trans(Tween.TRANS_ELASTIC)
+	#tween.set_parallel(true)
 	#tween.tween_property(Snow, "amount", 30, 7.5)
 	#tween.tween_property(ParticlesOfSnow, "initial_velocity_min", 0.0, 7.5)
 	#tween.tween_property(ParticlesOfSnow, "initial_velocity_max", 0.0, 7.5)
-	#
-#@rpc("any_peer", "call_local", "reliable")
-#func storm_state():
-	#Snow.emitting = true
-	#var tween = get_tree().create_tween()
-	#tween.tween_property(Snow, "amount", 80, 7.5)
+	
+@rpc("any_peer" ,"call_local")
+func storm_state():
+	Snow.emitting = true
+	Snow.amount = 110
+	ParticlesOfSnow.initial_velocity_max = 15.0
+	ParticlesOfSnow.initial_velocity_min = 40.0
+	#var tween = get_tree().create_tween().bind_node(self).set_trans(Tween.TRANS_ELASTIC)
+	#tween.set_parallel(true)
+	#tween.tween_property(Snow, "amount", 110, 7.5)
 	#tween.tween_property(ParticlesOfSnow, "initial_velocity_min", 15.0, 7.5)
 	#tween.tween_property(ParticlesOfSnow, "initial_velocity_max", 40.0, 7.5)
 
@@ -99,6 +109,6 @@ func _on_day_night_timeout() -> void:
 		state += 1
 		
 func _on_change_weather_timeout() -> void:
-	var rng = RandomNumberGenerator.new()
-	rng.randomize()
-	weather_state = rng.randi_range(0, 2)
+	if multiplayer.get_unique_id() == 1:
+		rng.randomize()
+		weather_state = rng.randi_range(0, 2)

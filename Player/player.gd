@@ -24,14 +24,14 @@ var Spawn_Host = [Vector2(275, 375), Vector2(105, 150), Vector2(350, 75)]
 var Spawn_Guest = [Vector2(875, 375), Vector2(1025, 150), Vector2(800, 75)]
 
 ### variables
-## MOVE
+### MOVE
 var SPEED = 300.0
 var SLIDE_SPEED = 1.0
 const JUMP_VELOCITY = -600.0
 var impuls = false
 var slide = false
 
-## ANIMATION
+### ANIMATION
 @onready var anim = $AnimatedSprite2D
 @onready var AnimPlayer = $AnimationPlayer
 @onready var NickName = $PlayerLabel
@@ -43,7 +43,7 @@ var slide = false
 @onready var Hit_Fall = $"AttackDirectionFALL/HitBoxFALL/Hit-Fall"
 var state = IDLE
 
-## ATTACK
+### ATTACK
 var max_hp = 100
 var health = 100
 var attack_type = true #Attack up
@@ -62,13 +62,12 @@ var deaths : int = 0
 var enemy_position_x : int
 var Winner : bool
 
-###LIGHT
+### LIGHT
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
 	
 func _ready() -> void:
-	Light.energy = Signals.LightTime
 	Player_Name = name
 	Host_Player = get_root(Player_Name)
 	if Host_Player:
@@ -87,27 +86,15 @@ func _ready() -> void:
 	if multiplayer.get_unique_id() == get_multiplayer_authority():
 		health_changed.connect(get_parent()._on_player_health_changed)
 		new_winner.connect(get_parent()._on_new_winner)
-	
+
+func _process(delta: float) -> void:
+	Signals.time.connect(_on_time_changed)
+
 func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
 		if position.y > 650:
 			rpc("death_and_reboot")
 		var direction := Input.get_axis("ui_left", "ui_right")
-		
-		match Signals.TimesOfDay:
-			0:
-				var tween = get_tree().create_tween()
-				tween.tween_property(Light, "energy", 0.0, 30)
-			1:
-				Light.energy = 0
-			2:
-				var tween = get_tree().create_tween()
-				tween.tween_property(Light, "energy", 0.85, 30)
-			3:
-				Light.energy = 0.85
-			
-		Signals.LightTime = Light.energy
-		
 		### BASEMENT STATE MACHINE
 		match state: 
 			MOVE:
@@ -354,3 +341,6 @@ func _on_hit_box_slide_area_entered(area: Area2D) -> void:
 
 func _on_hit_box_fall_area_entered(area: Area2D) -> void:
 	damaging(area)
+
+func _on_time_changed(light_time):
+	Light.energy = light_time
