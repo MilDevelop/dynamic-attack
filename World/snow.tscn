@@ -22,6 +22,6 @@ turbulence_noise_strength = 0.0
 
 [node name="Snow" type="GPUParticles2D"]
 scale = Vector2(4.8, 2.92)
-amount = 110
+amount = 40
 lifetime = 4.0
 process_material = SubResource("ParticleProcessMaterial_ov2c2")

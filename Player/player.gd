@@ -286,6 +286,7 @@ func get_damage(get_damage_current, got_velocity):
 
 @rpc("any_peer", "call_local")
 func death_and_reboot():
+	AnimPlayer.play("death")
 	health = 0
 	deaths += 1
 	if deaths < 3:

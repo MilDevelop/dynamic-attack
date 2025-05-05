@@ -372,7 +372,7 @@ texture = ExtResource("18_lh7yw")
 [node name="Snow" parent="Game/Weather" instance=ExtResource("4_scvq1")]
 position = Vector2(805, 304)
 scale = Vector2(5.76, 6.6)
-amount = 200
+amount = 40
 
 [node name="ChangeWeather" type="Timer" parent="Game/Weather"]
 wait_time = 90.0

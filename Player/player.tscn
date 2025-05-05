@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=3 uid="uid://c3psn3meyx04p"]
+[gd_scene load_steps=91 format=3 uid="uid://c3psn3meyx04p"]
 
 [ext_resource type="Script" uid="uid://dpjlwt00ter3p" path="res://Player/player.gd" id="1_23ykw"]
 [ext_resource type="Texture2D" uid="uid://cb1jyh8580na1" path="res://Textures/adventurer-Sheet.png" id="2_i8krh"]
@@ -213,6 +213,38 @@ region = Rect2(300, 111, 50, 37)
 [sub_resource type="AtlasTexture" id="AtlasTexture_qknc6"]
 atlas = ExtResource("2_i8krh")
 region = Rect2(0, 148, 50, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k53q1"]
+atlas = ExtResource("4_fjqp5")
+region = Rect2(192, 148, 48, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fhl08"]
+atlas = ExtResource("4_fjqp5")
+region = Rect2(240, 148, 48, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vtle1"]
+atlas = ExtResource("4_fjqp5")
+region = Rect2(288, 148, 48, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_od3ui"]
+atlas = ExtResource("4_fjqp5")
+region = Rect2(0, 185, 48, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_00tjw"]
+atlas = ExtResource("4_fjqp5")
+region = Rect2(48, 185, 48, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x3vf3"]
+atlas = ExtResource("4_fjqp5")
+region = Rect2(96, 185, 48, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apopc"]
+atlas = ExtResource("4_fjqp5")
+region = Rect2(144, 185, 48, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5htga"]
+atlas = ExtResource("4_fjqp5")
+region = Rect2(192, 185, 48, 37)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_axhk5"]
 atlas = ExtResource("3_psyry")
@@ -433,6 +465,35 @@ animations = [{
 "loop": false,
 "name": &"Slide",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k53q1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fhl08")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vtle1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_od3ui")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_00tjw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x3vf3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apopc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5htga")
+}],
+"loop": false,
+"name": &"death",
+"speed": 13.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -807,6 +868,33 @@ tracks/2/keys = {
 "values": [false, true]
 }
 
+[sub_resource type="Animation" id="Animation_k53q1"]
+length = 0.615385
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0769231, 0.153846, 0.230769, 0.307692, 0.384615, 0.461538, 0.538462),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["death"]
+}
+
 [sub_resource type="Animation" id="Animation_12aql"]
 length = 0.6
 tracks/0/type = "value"
@@ -859,6 +947,7 @@ _data = {
 &"RESET": SubResource("Animation_y1iu2"),
 &"Run": SubResource("Animation_1mrg1"),
 &"Slide": SubResource("Animation_bacvu"),
+&"death": SubResource("Animation_k53q1"),
 &"fallen for attack": SubResource("Animation_12aql")
 }
 
@@ -934,7 +1023,7 @@ script = ExtResource("1_23ykw")
 position = Vector2(3, -10)
 scale = Vector2(3.18, 3.25676)
 sprite_frames = SubResource("SpriteFrames_8be60")
-animation = &"Attack Around"
+animation = &"death"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
