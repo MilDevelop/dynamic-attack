@@ -270,7 +270,8 @@ func get_damage_state():
 
 @rpc("call_local", "reliable", "any_peer")
 func get_damage(get_damage_current, got_velocity):
-	state = GET_DAMAGE
+	if state in [IDLE, MOVE, ATTACK_ON_FLOOR, FALL_ATTACK]: ### TEST !!!
+		state = GET_DAMAGE
 	if slide and velocity.x != 0:
 		get_damage_current /= 2
 	else:
@@ -284,7 +285,7 @@ func get_damage(get_damage_current, got_velocity):
 	if health <= 0:
 		death_and_reboot.rpc()
 
-@rpc("any_peer", "call_local")
+@rpc("call_local")
 func death_and_reboot():
 	AnimPlayer.play("death")
 	health = 0
@@ -304,7 +305,6 @@ func death_and_reboot():
 		emit_signal("new_winner", Winner)
 	else:
 		deaths = 0
-		health = 0
 		emit_signal("health_changed", health)
 		emit_signal("new_winner", Winner)
 		queue_free()

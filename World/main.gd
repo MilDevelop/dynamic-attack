@@ -56,7 +56,7 @@ func _on_new_winner(winner_player : bool):
 		if Signals.Number_of_Players > 1:
 			rpc("win", winner_player)
 	
-@rpc("any_peer", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func win(winner_player : bool):
 	if winner_player == true: #If Host player
 		Wins[0] += 1
